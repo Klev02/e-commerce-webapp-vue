@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import type { Product } from '../interfaces/Product';
+import { onMounted, reactive } from 'vue';
+import type { ProductsResponse } from '../interfaces/ProductsResponse';
+import ProductList from '../components/ProductList.vue';
 
 const API_URL = "https://63c10327716562671870f959.mockapi.io/products";
 
-const products = ref<Product[]>([]);
-const isLoading = ref<boolean>(false);
-const hasError = ref<boolean>(false);
+const productsApiResponse = reactive<ProductsResponse>({
+  products: [],
+  isLoading: false,
+  hasError: false
+})
 
 async function fetchProducts() {
-  isLoading.value = true;
-  hasError.value = false;
+  productsApiResponse.isLoading = true;
+  productsApiResponse.hasError = false;
 
   try {
     const response = await fetch(API_URL);
@@ -18,12 +21,12 @@ async function fetchProducts() {
       throw new Error('SOmething went wrong!');
     }
 
-    products.value = await response.json();
+    productsApiResponse.products = await response.json();
   } catch (error) {
     console.log(error);
-    hasError.value = true;
+    productsApiResponse.hasError = true;
   } finally {
-    isLoading.value = false;
+    productsApiResponse.isLoading = false;
   }
 }
 
@@ -35,9 +38,9 @@ onMounted(() => {
 
 <template>
   <p>Products</p>
-  <p v-if="isLoading">Loading...</p>
-  <p v-else-if="hasError">Something went wrong</p>
-  <p v-else-if="!isLoading && !hasError && products.length > 0">
-    {{ JSON.stringify(products) }}
+  <p v-if="productsApiResponse.isLoading">Loading...</p>
+  <p v-else-if="productsApiResponse.hasError">Something went wrong</p>
+  <p v-else-if="!productsApiResponse.isLoading && !productsApiResponse.hasError && productsApiResponse.products.length > 0">
+    <ProductList :products="productsApiResponse.products" />
   </p>
 </template>
