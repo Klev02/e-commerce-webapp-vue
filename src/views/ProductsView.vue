@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue';
-import type { ProductsResponse } from '../interfaces/ProductsResponse';
-import ProductList from '../components/ProductList.vue';
+import { onMounted, reactive } from 'vue'
+import type { ProductsResponse } from '../interfaces/ProductsResponse'
+import ProductList from '../components/ProductList.vue'
 
-const API_URL = "https://63c10327716562671870f959.mockapi.io/products";
+const API_URL = 'https://63c10327716562671870f959.mockapi.io/products'
 
 const productsApiResponse = reactive<ProductsResponse>({
   products: [],
@@ -12,35 +12,40 @@ const productsApiResponse = reactive<ProductsResponse>({
 })
 
 async function fetchProducts() {
-  productsApiResponse.isLoading = true;
-  productsApiResponse.hasError = false;
+  productsApiResponse.isLoading = true
+  productsApiResponse.hasError = false
 
   try {
-    const response = await fetch(API_URL);
+    const response = await fetch(API_URL)
     if (!response.ok) {
-      throw new Error('SOmething went wrong!');
+      throw new Error('SOmething went wrong!')
     }
 
-    productsApiResponse.products = await response.json();
+    productsApiResponse.products = await response.json()
   } catch (error) {
-    console.log(error);
-    productsApiResponse.hasError = true;
+    console.log(error)
+    productsApiResponse.hasError = true
   } finally {
-    productsApiResponse.isLoading = false;
+    productsApiResponse.isLoading = false
   }
 }
 
 onMounted(() => {
-  fetchProducts();
+  fetchProducts()
 })
-
 </script>
 
 <template>
   <p>Products</p>
   <p v-if="productsApiResponse.isLoading">Loading...</p>
   <p v-else-if="productsApiResponse.hasError">Something went wrong</p>
-  <p v-else-if="!productsApiResponse.isLoading && !productsApiResponse.hasError && productsApiResponse.products.length > 0">
+  <p
+    v-else-if="
+      !productsApiResponse.isLoading &&
+      !productsApiResponse.hasError &&
+      productsApiResponse.products.length > 0
+    "
+  >
     <ProductList :products="productsApiResponse.products" />
   </p>
 </template>
