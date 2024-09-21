@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 
-const { value = 0, min = 0 } = defineProps<{ value?: number; min?: number; }>();
+const { value = 0, min = 0, max} = defineProps<{ value?: number; min?: number; max: number }>();
 const emit = defineEmits<{ (e: 'increase'): void; (e: 'decrease'): void  }>();
 
 </script>
@@ -10,7 +10,7 @@ const emit = defineEmits<{ (e: 'increase'): void; (e: 'decrease'): void  }>();
   <div class="counter">
     <button class="counter__action-button" @click="emit('decrease')" :disabled="value <= min">-</button>
     <input class="counter__input" type="number" :value="value" :min="min" />
-    <button class="counter__action-button" @click="emit('increase')">+</button>
+    <button class="counter__action-button" @click="emit('increase')" :disabled="value >= max">+</button>
   </div>
 </template>
 

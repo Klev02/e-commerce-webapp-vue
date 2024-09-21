@@ -1,14 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-const emit = defineEmits(['click']);
-
-const onClick = () => {
-  emit('click');
-};
+const emit = defineEmits(["click"]);
 </script>
 
 <template>
-  <button class="action-button" @click="onClick">
+  <button class="action-button" @click="emit('click')">
     <slot>Button</slot>
   </button>
 </template>

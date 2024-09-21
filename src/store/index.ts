@@ -1,5 +1,7 @@
 import { reactive } from 'vue';
 import type { State } from '../interfaces/State';
+import type { Product } from '../interfaces/Product';
+import type { CartItem } from '../interfaces/CartItem';
 
 export const useStore = () => {
   const state: State = reactive({
@@ -29,8 +31,20 @@ export const useStore = () => {
     }
   };
 
+  const addToCart = (product: Product, amount: number) => {
+    const existingOrder = state.cart.find(
+      (cartItem: CartItem) => cartItem.product.id === product.id
+    );
+    if (existingOrder) {
+      existingOrder.quantity += amount;
+    } else {
+      state.cart.push({ product, quantity: amount });
+    }
+  };
+
   return {
     state,
-    fetchProducts
+    fetchProducts,
+    addToCart
   };
 };
