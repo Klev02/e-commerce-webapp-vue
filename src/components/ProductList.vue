@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Product } from '../interfaces/Product'
-import ProductItem from './ProductItem.vue'
+import type { Product } from '../interfaces/Product';
+import ProductItem from './ProductItem.vue';
 
-const { products } = defineProps<{ products: Product[] }>()
+const { products } = defineProps<{ products: Product[] }>();
 </script>
 
 <template>

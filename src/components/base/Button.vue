@@ -1,10 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-const emit = defineEmits(['click'])
+const emit = defineEmits(['click']);
 
 const onClick = () => {
-  emit('click')
-}
+  emit('click');
+};
 </script>
 
 <template>
@@ -26,18 +26,17 @@ const onClick = () => {
     background-color 0.3s ease,
     box-shadow 0.3s ease;
 
-    &:hover {
-      background-color: #2c9e70;
-    }
+  &:hover {
+    background-color: #2c9e70;
+  }
 
-    &:active {
-      background-color: #1b6d4b;
-    }
+  &:active {
+    background-color: #1b6d4b;
+  }
 
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(66, 185, 131, 0.4);
-    }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 185, 131, 0.4);
+  }
 }
-
 </style>

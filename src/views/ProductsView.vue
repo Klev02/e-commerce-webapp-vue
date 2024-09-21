@@ -1,51 +1,32 @@
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
-import type { ProductsResponse } from '../interfaces/ProductsResponse'
-import ProductList from '../components/ProductList.vue'
+import { computed, inject, onMounted } from 'vue';
+import ProductList from '../components/ProductList.vue';
+import { STORE_NAME } from '../constants';
+import type { useStore } from '../store';
 
-const API_URL = 'https://63c10327716562671870f959.mockapi.io/products'
+const { state, fetchProducts } = inject(STORE_NAME) as ReturnType<typeof useStore>;
 
-const productsApiResponse = reactive<ProductsResponse>({
-  products: [],
-  isLoading: false,
-  hasError: false
-})
-
-async function fetchProducts() {
-  productsApiResponse.isLoading = true
-  productsApiResponse.hasError = false
-
-  try {
-    const response = await fetch(API_URL)
-    if (!response.ok) {
-      throw new Error('SOmething went wrong!')
-    }
-
-    productsApiResponse.products = await response.json()
-  } catch (error) {
-    console.log(error)
-    productsApiResponse.hasError = true
-  } finally {
-    productsApiResponse.isLoading = false
-  }
-}
+const isLoading = computed(() => state.isLoading);
+const hasError = computed(() => state.hasError);
+const products = computed(() => state.products);
 
 onMounted(() => {
-  fetchProducts()
-})
+  fetchProducts();
+});
+
 </script>
 
 <template>
   <p>Products</p>
-  <p v-if="productsApiResponse.isLoading">Loading...</p>
-  <p v-else-if="productsApiResponse.hasError">Something went wrong</p>
+  <p v-if="isLoading">Loading...</p>
+  <p v-else-if="hasError">Something went wrong</p>
   <p
     v-else-if="
-      !productsApiResponse.isLoading &&
-      !productsApiResponse.hasError &&
-      productsApiResponse.products.length > 0
+      !isLoading &&
+      !hasError &&
+      products.length > 0
     "
   >
-    <ProductList :products="productsApiResponse.products" />
+    <ProductList :products="products" />
   </p>
 </template>

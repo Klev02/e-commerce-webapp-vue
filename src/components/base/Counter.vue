@@ -1,21 +1,21 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
-const { initial = 0 } = defineProps<{ initial?: number }>()
-const emit = defineEmits<{ (e: 'change', value: number): void }>()
+const { initial = 0 } = defineProps<{ initial?: number }>();
+const emit = defineEmits<{ (e: 'change', value: number): void }>();
 
-const counter = ref(initial)
+const counter = ref(initial);
 
 const increase = () => {
-  counter.value++
+  counter.value++;
   emit('change', counter.value);
-}
+};
 
 const decrease = () => {
-  counter.value--
-  emit('change', counter.value)
-}
+  counter.value--;
+  emit('change', counter.value);
+};
 </script>
 
 <template>
@@ -51,5 +51,4 @@ const decrease = () => {
     }
   }
 }
-
 </style>
