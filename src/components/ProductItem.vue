@@ -2,13 +2,11 @@
 import type { Product } from '../interfaces/Product';
 import Counter from './base/Counter.vue';
 import Button from './base/Button.vue';
+import { ref } from 'vue';
 
 const { product } = defineProps<{ product: Product }>();
 
-const onChangeAmount = (value: number) => {
-    console.log(value);
-};
-
+const orderAmount = ref<number>(0);
 </script>
 
 <template>
@@ -17,10 +15,10 @@ const onChangeAmount = (value: number) => {
     <img class="product-item__image" :src="product.img" :alt="product.name" />
     <p>Available amount: {{ product.availableAmount }}</p>
     <p>Min. order amount: {{ product.minOrderAmount }}</p>
-    <Counter @change="onChangeAmount" />
-    <Button>Add to cart</Button>
-    <Button>Update cart</Button>
-    <Button>Remove from cart</Button>
+    <Counter :value="orderAmount" @increase="orderAmount++" @decrease="orderAmount--" />
+    <Button v-if="orderAmount <= 0">Add to cart</Button>
+    <Button v-if="orderAmount > 0" >Update cart</Button>
+    <Button v-if="orderAmount > 0">Remove from cart</Button>
   </div>
 </template>
 

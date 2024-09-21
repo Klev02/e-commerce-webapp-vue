@@ -1,28 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { ref } from 'vue';
 
-const { initial = 0 } = defineProps<{ initial?: number }>();
-const emit = defineEmits<{ (e: 'change', value: number): void }>();
+const { value = 0, min = 0 } = defineProps<{ value?: number; min?: number; }>();
+const emit = defineEmits<{ (e: 'increase'): void; (e: 'decrease'): void  }>();
 
-const counter = ref(initial);
-
-const increase = () => {
-  counter.value++;
-  emit('change', counter.value);
-};
-
-const decrease = () => {
-  counter.value--;
-  emit('change', counter.value);
-};
 </script>
 
 <template>
   <div class="counter">
-    <button class="counter__action-button" @click="decrease" :disabled="counter <= 0">-</button>
-    <input class="counter__input" type="number" v-model.number="counter" :min="0" />
-    <button class="counter__action-button" @click="increase">+</button>
+    <button class="counter__action-button" @click="emit('decrease')" :disabled="value <= min">-</button>
+    <input class="counter__input" type="number" :value="value" :min="min" />
+    <button class="counter__action-button" @click="emit('increase')">+</button>
   </div>
 </template>
 
