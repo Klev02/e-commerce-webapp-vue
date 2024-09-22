@@ -4,6 +4,7 @@ import Counter from './base/Counter.vue';
 import Button from './base/Button.vue';
 import { ref } from 'vue';
 import { ERROR_MESSAGES } from '../constants';
+import fallbackImage from '@/assets/fallback_img.jpg';
 
 const { product } = defineProps<{ product: Product }>();
 const emit = defineEmits<{ (e: "addToCart", product: Product, orderAmount: number): void }>();
@@ -32,7 +33,7 @@ const onClickAddToCart = () => {
 <template>
   <div class="product-item">
     <p>{{ product.name }} - {{ product.price }}</p>
-    <img class="product-item__image" :src="product.img" :alt="product.name" />
+    <img v-fallback-image="{ fallback: fallbackImage}" class="product-item__image" :src="product.img" :alt="product.name" />
     <p>Available amount: {{ product.availableAmount }}</p>
     <p>Min. order amount: {{ product.minOrderAmount }}</p>
     <Counter v-model="amount" :max="product.availableAmount" />
