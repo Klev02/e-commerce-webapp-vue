@@ -7,7 +7,7 @@ import { ERROR_MESSAGES } from '../constants';
 import fallbackImage from '@/assets/fallback_img.jpg';
 
 const { product } = defineProps<{ product: Product }>();
-const emit = defineEmits<{ (e: "addToCart", product: Product, orderAmount: number): void }>();
+const emit = defineEmits<{ (e: "addToCart", productId: string, orderAmount: number): void }>();
 
 const errorMessage = ref<string>();
 const amount = ref<number>(0);
@@ -23,8 +23,8 @@ const onClickAddToCart = () => {
         errorMessage.value = ERROR_MESSAGES.ZERO_AMOUNT;
     } else {
         errorMessage.value = '';
-        amount.value = 0;
-        emit("addToCart", product, amount.value);
+        emit("addToCart", product.id, amount.value);
+        amount.value = 0;  
     }
 }
 

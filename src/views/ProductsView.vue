@@ -2,23 +2,23 @@
 import { computed, inject, onMounted } from 'vue';
 import { STORE_NAME } from '../constants';
 import ProductItem from '../components/ProductItem.vue';
-import type { useStore } from '../store';
-import type { Product } from '../interfaces/Product';
+import type { Store } from '../interfaces/Store';
 
-const { state, fetchProducts, addToCart } = inject(STORE_NAME) as ReturnType<typeof useStore>;
+const { state, fetchProducts, addToCart } = inject(STORE_NAME) as Store;
 
 const isLoading = computed(() => state.isLoading);
 const hasError = computed(() => state.hasError);
 const products = computed(() => state.products);
+const hasLoaded = computed(() => state.hasLoaded);
 
 onMounted(() => {
-  if (!state.hasLoaded) {
+  if (!hasLoaded.value) {
     fetchProducts();
   }
 });
 
-const onAddToCart = (product: Product, orderAmount: number) => {
-  addToCart(product, orderAmount);
+const onAddToCart = (productId: string, orderAmount: number) => {
+  addToCart(productId, orderAmount);
 };
 
 </script>

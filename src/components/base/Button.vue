@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-const { disabled } =  defineProps<{ disabled: boolean }>();
+const { disabled = false } =  defineProps<{ disabled?: boolean }>();
 const emit = defineEmits(["click"]);
 </script>
 

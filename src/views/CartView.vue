@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue';
+import { inject } from 'vue';
 import { STORE_NAME } from '../constants';
-import type { useStore } from '../store';
+import type { Store } from '../interfaces/Store';
+import Button from '../components/base/Button.vue';
 
-const { state, getTotalCartPrice } = inject(STORE_NAME) as ReturnType<typeof useStore>;
+const { getCartDetails: cartDetails, removeFromCart } = inject(STORE_NAME) as Store;
 
-const cart = computed(() => state.cart);
-const getTotalPrice = computed(() => getTotalCartPrice());
 </script>
 
 <template>
@@ -17,20 +16,24 @@ const getTotalPrice = computed(() => getTotalCartPrice());
           <th>Price</th>
           <th>Amount</th>
           <th>Total Price</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr class="cart-table__body-row" v-for="cartItem in cart" :key="cartItem.product.id">
-          <td>{{ cartItem.product.name }}</td>
-          <td>{{ cartItem.product.price }}</td>
+        <tr class="cart-table__body-row" v-for="cartItem in cartDetails.cart" :key="cartItem.productId">
+          <td>{{ cartItem.name }}</td>
+          <td>{{ cartItem.price }}</td>
           <td>{{ cartItem.amount }}</td>
-          <td>{{ cartItem.product.price * cartItem.amount }}</td>
+          <td>{{ cartItem.price * cartItem.amount }}</td>
+          <td>
+            <Button @click="() => removeFromCart(cartItem.productId)">X</Button>
+          </td>
         </tr>
       </tbody>
       <tfoot>
         <tr class="cart-table__footer-row">
           <td colspan="3">Total:</td>
-          <td>{{ getTotalPrice }}</td>
+          <td>{{ cartDetails.totalPrice }}</td>
         </tr>
       </tfoot>
   </table>
