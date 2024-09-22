@@ -8,7 +8,8 @@ export const useStore = () => {
     products: [],
     cart: [],
     isLoading: false,
-    hasError: false
+    hasError: false,
+    hasLoaded: false
   });
 
   const fetchProducts = async (): Promise<void> => {
@@ -23,6 +24,7 @@ export const useStore = () => {
       }
 
       state.products = await response.json();
+      state.hasLoaded = true;
     } catch (error) {
       console.log(error);
       state.hasError = true;
@@ -40,6 +42,8 @@ export const useStore = () => {
     } else {
       state.cart.push({ product, quantity: amount });
     }
+
+    product.availableAmount -= amount;
   };
 
   return {

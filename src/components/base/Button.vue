@@ -1,10 +1,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
+const { disabled } =  defineProps<{ disabled: boolean }>();
 const emit = defineEmits(["click"]);
 </script>
 
 <template>
-  <button class="action-button" @click="emit('click')">
+  <button class="action-button" @click="emit('click')" :disabled="disabled">
     <slot>Button</slot>
   </button>
 </template>
@@ -33,6 +34,11 @@ const emit = defineEmits(["click"]);
   &:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(66, 185, 131, 0.4);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 }
 </style>

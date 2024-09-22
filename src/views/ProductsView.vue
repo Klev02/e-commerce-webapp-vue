@@ -12,7 +12,9 @@ const hasError = computed(() => state.hasError);
 const products = computed(() => state.products);
 
 onMounted(() => {
-  fetchProducts();
+  if (!state.hasLoaded) {
+    fetchProducts();
+  }
 });
 
 const onAddToCart = (product: Product, orderAmount: number) => {

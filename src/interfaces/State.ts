@@ -6,4 +6,5 @@ export interface State {
   cart: CartItem[];
   isLoading: boolean;
   hasError: boolean;
+  hasLoaded: boolean;
 }

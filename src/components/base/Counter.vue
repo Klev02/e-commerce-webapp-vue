@@ -1,16 +1,14 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 
-const { value = 0, min = 0, max} = defineProps<{ value?: number; min?: number; max: number }>();
-const emit = defineEmits<{ (e: 'increase'): void; (e: 'decrease'): void  }>();
+const { min = 0, max} = defineProps<{ min?: number; max: number }>();
+const model = defineModel({ default: 0, required: true });
 
 </script>
 
 <template>
   <div class="counter">
-    <button class="counter__action-button" @click="emit('decrease')" :disabled="value <= min">-</button>
-    <input class="counter__input" type="number" :value="value" :min="min" />
-    <button class="counter__action-button" @click="emit('increase')" :disabled="value >= max">+</button>
+    <input class="counter__input" type="number" v-model="model" :min="min" :max="max" />
   </div>
 </template>
 
@@ -24,19 +22,6 @@ const emit = defineEmits<{ (e: 'increase'): void; (e: 'decrease'): void  }>();
     font-size: 24px;
     width: 60px;
     text-align: center;
-  }
-
-  &__action-button {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-    cursor: pointer;
-    margin: 0 10px;
-
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
   }
 }
 </style>
