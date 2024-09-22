@@ -3,13 +3,9 @@ import { computed, inject, onMounted } from 'vue';
 import { STORE_NAME } from '../constants';
 import ProductItem from '../components/ProductItem.vue';
 import type { Store } from '../interfaces/Store';
+import LoadingSpinner from '../components/base/LoadingSpinner.vue';
 
-const { state, fetchProducts, addToCart } = inject(STORE_NAME) as Store;
-
-const isLoading = computed(() => state.isLoading);
-const hasError = computed(() => state.hasError);
-const products = computed(() => state.products);
-const hasLoaded = computed(() => state.hasLoaded);
+const { hasLoaded, isLoading, hasError, products, fetchProducts, addToCart } = inject(STORE_NAME) as Store;
 
 onMounted(() => {
   if (!hasLoaded.value) {
@@ -17,15 +13,10 @@ onMounted(() => {
   }
 });
 
-const onAddToCart = (productId: string, orderAmount: number) => {
-  addToCart(productId, orderAmount);
-};
-
 </script>
 
 <template>
-  <p>Products</p>
-  <p v-if="isLoading">Loading...</p>
+  <LoadingSpinner v-if="isLoading" />
   <p v-else-if="hasError">Something went wrong</p>
   <div
     v-else-if="
@@ -36,7 +27,7 @@ const onAddToCart = (productId: string, orderAmount: number) => {
   >
   <ul>
     <li v-for="product in products" :key="product.id">
-      <ProductItem :product="product" @add-to-cart="onAddToCart" />
+      <ProductItem :product="product" @add-to-cart="addToCart" />
     </li>
   </ul>
 </div>

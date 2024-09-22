@@ -98,8 +98,16 @@ export const useStore = () => {
     };
   });
 
+  const isLoading = computed(() => state.isLoading);
+  const hasError = computed(() => state.hasError);
+  const products = computed(() => state.products);
+  const hasLoaded = computed(() => state.hasLoaded);
+
   return {
-    state,
+    isLoading,
+    hasError,
+    products,
+    hasLoaded,
     fetchProducts,
     addToCart,
     getCartDetails,

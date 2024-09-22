@@ -5,3 +5,7 @@ export const ERROR_MESSAGES = {
   EXCEEDS_AVAILABLE_AMOUNT: 'Amount exceeds available amount!',
   NEGATIVE_AMOUNT: 'Should not be zero amount!'
 };
+export const ROUTER_PATH = {
+  PRODUCTS: '/products',
+  CART: '/cart'
+};
