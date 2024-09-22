@@ -3,6 +3,7 @@ import type { Product } from '../interfaces/Product';
 import Counter from './base/Counter.vue';
 import Button from './base/Button.vue';
 import { ref } from 'vue';
+import { ERROR_MESSAGES } from '../constants';
 
 const { product } = defineProps<{ product: Product }>();
 const emit = defineEmits<{ (e: "addToCart", product: Product, orderAmount: number): void }>();
@@ -12,17 +13,17 @@ const amount = ref<number>(0);
 
 const onClickAddToCart = () => {
     if(amount.value === 0) {
-        errorMessage.value = 'Please add at least 1 product!';
+        errorMessage.value = ERROR_MESSAGES.ZERO_AMOUNT;
     } else if(amount.value > 0 && amount.value < product.minOrderAmount) {
-        errorMessage.value = 'Amount does not reach minimum order amount!';
+        errorMessage.value = ERROR_MESSAGES.MIN_ORDER_AMOUNT;
     } else if(amount.value > product.availableAmount) {
-        errorMessage.value = 'Amount exceeds available amount!';
+        errorMessage.value = ERROR_MESSAGES.EXCEEDS_AVAILABLE_AMOUNT;
     } else if(amount.value < 0) {
-        errorMessage.value = 'Should not be negative amount!';
+        errorMessage.value = ERROR_MESSAGES.ZERO_AMOUNT;
     } else {
         errorMessage.value = '';
-        emit("addToCart", product, amount.value);
         amount.value = 0;
+        emit("addToCart", product, amount.value);
     }
 }
 

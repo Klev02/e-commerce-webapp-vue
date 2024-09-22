@@ -38,17 +38,22 @@ export const useStore = () => {
       (cartItem: CartItem) => cartItem.product.id === product.id
     );
     if (existingOrder) {
-      existingOrder.quantity += amount;
+      existingOrder.amount += amount;
     } else {
-      state.cart.push({ product, quantity: amount });
+      state.cart.push({ product, amount: amount });
     }
 
     product.availableAmount -= amount;
   };
 
+  const getTotalCartPrice = (): number => {
+    return state.cart.reduce((sum, item) => sum + item.product.price * item.amount, 0);
+  };
+
   return {
     state,
     fetchProducts,
-    addToCart
+    addToCart,
+    getTotalCartPrice
   };
 };
