@@ -5,6 +5,18 @@ import type { CartItem } from '../interfaces/CartItem';
 import type { CartDetails } from '../interfaces/CartDetails';
 import type { CartItemDetails } from '../interfaces/CartItemDetails';
 
+/**
+ * IMPORTANT NOTES!
+ * I decided to go with arrays of storing data, however in a real life example,
+ * as products list grows, lookup (searching elements) is slower - O(n) time complexity
+ * and removing elements from array has bigger space complexity.
+ * HashMap (Map) could be considered,
+ * but for sorting, filtering and maintaining strict order, array might still more suitable.
+ * 
+ * I chose lightweight solution for state management, however for bigger project
+ * Pinia preferable
+ */
+
 export const useStore = () => {
   //Private
   const state: State = reactive({
@@ -32,7 +44,7 @@ export const useStore = () => {
       const response = await fetch(import.meta.env.VITE_API_URL as string);
 
       if (!response.ok) {
-        throw new Error('SOmething went wrong!');
+        throw new Error('Something went wrong!');
       }
 
       state.products = await response.json();

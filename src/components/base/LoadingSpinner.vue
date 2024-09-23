@@ -1,10 +1,10 @@
 <template>
-    <div class="loader"></div>
+  <div class="loader"></div>
 </template>
 <style lang="scss" scoped>
 .loader {
   border: 8px solid rgba(255, 255, 255, 0.3);
-  border-top: 8px solid hsla(160, 100%, 37%, 1);
+  border-top: 8px solid $primary-color;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -12,7 +12,11 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

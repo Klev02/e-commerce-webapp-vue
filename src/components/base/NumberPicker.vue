@@ -1,19 +1,16 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-
-const { min = 0, max} = defineProps<{ min?: number; max: number }>();
+const { min = 0, max } = defineProps<{ min?: number; max: number }>();
 const model = defineModel({ default: 0, required: true });
-
 </script>
 
 <template>
-  <div class="counter">
-    <input class="counter__input" type="number" v-model="model" :min="min" :max="max" />
+  <div class="number-picker">
+    <input class="number-picker__input" type="number" v-model="model" :min="min" :max="max" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.counter {
+.number-picker {
   display: flex;
   align-items: center;
   justify-content: center;
