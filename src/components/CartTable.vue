@@ -1,9 +1,16 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import type { CartDetails } from '../interfaces/CartDetails';
 import ActionButton from './base/ActionButton.vue';
+import { capitalizeFirstLetter } from '../utils';
+import type { CartItemDetails } from '../interfaces/CartItemDetails';
 
 const { cartDetails } = defineProps<{cartDetails: CartDetails}>();
 const emit = defineEmits<{ (event: "removeFromCart", productId: string): void}>();
+
+const cartItemDetails = computed<CartItemDetails[]>(() => {
+    return cartDetails.cart.map((cartItem: CartItemDetails) => ({ ...cartItem, name: capitalizeFirstLetter(cartItem.name)}));
+})
 
 </script>
 <template>
@@ -18,7 +25,7 @@ const emit = defineEmits<{ (event: "removeFromCart", productId: string): void}>(
         </tr>
       </thead>
       <tbody class="cart-table__body">
-        <tr class="cart-table__body-row" v-for="cartItem in cartDetails.cart" :key="cartItem.productId">
+        <tr class="cart-table__body-row" v-for="cartItem in cartItemDetails" :key="cartItem.productId">
           <td data-label="Product">{{ cartItem.name }}</td>
           <td data-label="Price">€{{ cartItem.price }}</td>
           <td data-label="Amount">{{ cartItem.amount }}</td>
