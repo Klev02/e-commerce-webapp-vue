@@ -7,7 +7,7 @@ const renderComponent = (props: {
   max: number;
   modelValue?: number;
 }): { wrapper: VueWrapper; input: DOMWrapper<Element> } => {
-  const wrapper = shallowMount(NumberPicker, {
+  const wrapper: VueWrapper = shallowMount(NumberPicker, {
     props: {
       ...props,
       'onUpdate:modelValue': async (e) => await wrapper.setProps({ modelValue: e })
