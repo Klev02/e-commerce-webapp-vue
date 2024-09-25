@@ -1,9 +1,10 @@
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import type { State } from '../interfaces/State';
 import type { Product } from '../interfaces/Product';
 import type { CartItem } from '../interfaces/CartItem';
 import type { CartDetails } from '../interfaces/CartDetails';
 import type { CartItemDetails } from '../interfaces/CartItemDetails';
+import type { Store } from '../interfaces/Store';
 
 /**
  * IMPORTANT NOTES!
@@ -12,20 +13,22 @@ import type { CartItemDetails } from '../interfaces/CartItemDetails';
  * and removing elements from array has bigger space complexity.
  * HashMap (Map) could be considered,
  * but for sorting, filtering and maintaining strict order, array might still more suitable.
- * 
+ *
  * I chose lightweight solution for state management, however for bigger project
  * Pinia preferable
  */
 
-export const useStore = () => {
+export const initialState: State = {
+  products: [],
+  cart: [],
+  isLoading: false,
+  hasError: false,
+  hasLoaded: false
+};
+
+export const useStore = (initialState: State) => {
   //Private
-  const state: State = reactive({
-    products: [],
-    cart: [],
-    isLoading: false,
-    hasError: false,
-    hasLoaded: false
-  });
+  const state: State = reactive<State>(initialState);
 
   const getProductById = (productId: string): Product | undefined => {
     return state.products.find((product: Product) => product.id === productId);
@@ -52,6 +55,7 @@ export const useStore = () => {
     } catch (error) {
       console.log(error);
       state.hasError = true;
+      state.hasLoaded = false;
     } finally {
       state.isLoading = false;
     }
@@ -86,7 +90,7 @@ export const useStore = () => {
     }
   };
 
-  const getCartDetails = computed<CartDetails>(() => {
+  const cartDetails = computed<CartDetails>(() => {
     const cardDetails: CartItemDetails[] = [];
     let totalCartPrice = 0;
 
@@ -110,10 +114,10 @@ export const useStore = () => {
     };
   });
 
-  const isLoading = computed(() => state.isLoading);
-  const hasError = computed(() => state.hasError);
-  const products = computed(() => state.products);
-  const hasLoaded = computed(() => state.hasLoaded);
+  const isLoading = computed<boolean>(() => state.isLoading);
+  const hasError = computed<boolean>(() => state.hasError);
+  const products = computed<Product[]>(() => state.products);
+  const hasLoaded = computed<boolean>(() => state.hasLoaded);
 
   return {
     isLoading,
@@ -122,7 +126,7 @@ export const useStore = () => {
     hasLoaded,
     fetchProducts,
     addToCart,
-    getCartDetails,
+    cartDetails,
     removeFromCart
   };
 };

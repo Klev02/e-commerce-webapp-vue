@@ -8,11 +8,12 @@ import type { CartItemDetails } from '../interfaces/CartItemDetails';
 const { cartDetails } = defineProps<{cartDetails: CartDetails}>();
 const emit = defineEmits<{ (event: "removeFromCart", productId: string): void}>();
 
-const cartItemDetails = computed<CartItemDetails[]>(() => {
-    return cartDetails.cart.map((cartItem: CartItemDetails) => ({ ...cartItem, name: capitalizeFirstLetter(cartItem.name)}));
-})
+const cartItemDetails = computed<(CartItemDetails & {totalPrice: number })[]>(() => {
+    return cartDetails.cart.map((cartItem: CartItemDetails) => ({ ...cartItem, name: capitalizeFirstLetter(cartItem.name), totalPrice: cartItem.price * cartItem.amount}));
+});
 
 </script>
+
 <template>
     <table class="cart-table">
       <thead class="cart-table__header">
@@ -29,9 +30,9 @@ const cartItemDetails = computed<CartItemDetails[]>(() => {
           <td data-label="Product">{{ cartItem.name }}</td>
           <td data-label="Price">€{{ cartItem.price }}</td>
           <td data-label="Amount">{{ cartItem.amount }}</td>
-          <td data-label="Total Price">€{{ cartItem.price * cartItem.amount }}</td>
+          <td data-label="Total Price">€{{ cartItem.totalPrice }}</td>
           <td>
-            <ActionButton @click="() => emit('removeFromCart', cartItem.productId)">X</ActionButton>
+            <ActionButton @click="$emit('removeFromCart', cartItem.productId)">X</ActionButton>
           </td>
         </tr>
       </tbody>

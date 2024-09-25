@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { min = 0, max } = defineProps<{ min?: number; max: number }>();
-const model = defineModel({ default: 0, required: true });
+const model = defineModel({ default: 0 });
 </script>
 
 <template>
