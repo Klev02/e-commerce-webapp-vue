@@ -24,15 +24,15 @@ const closeDrawer = () => {
 
       <nav class="header__nav">
         <ul>
-          <li data-cy="product-link"><RouterLink :to="ROUTER_PATH.PRODUCTS">Products</RouterLink></li>
+          <li data-cy="product-link">
+            <RouterLink :to="ROUTER_PATH.PRODUCTS">Products</RouterLink>
+          </li>
           <li data-cy="cart-link"><RouterLink :to="ROUTER_PATH.CART">Cart</RouterLink></li>
         </ul>
       </nav>
-      
+
       <ActionButton class="header__toggle" @click="toggleDrawer">
-        <div class="header__toggle-content">
-          <span></span><span></span><span></span>
-        </div>
+        <div class="header__toggle-content"><span></span><span></span><span></span></div>
       </ActionButton>
     </div>
 
@@ -122,9 +122,9 @@ const closeDrawer = () => {
         margin: 20px 0;
 
         a {
-        color: $white;
-        text-decoration: none;
-        font-size: 18px;
+          color: $white;
+          text-decoration: none;
+          font-size: 18px;
         }
       }
     }
@@ -134,5 +134,4 @@ const closeDrawer = () => {
 .router-link-active {
   font-weight: bold;
 }
-
 </style>

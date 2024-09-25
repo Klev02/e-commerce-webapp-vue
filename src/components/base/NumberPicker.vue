@@ -5,7 +5,14 @@ const model = defineModel({ default: 0 });
 
 <template>
   <div class="number-picker">
-    <input class="number-picker__input" type="number" v-model="model" :min="min" :max="max" data-cy="number-picker" />
+    <input
+      class="number-picker__input"
+      type="number"
+      v-model="model"
+      :min="min"
+      :max="max"
+      data-cy="number-picker"
+    />
   </div>
 </template>
 

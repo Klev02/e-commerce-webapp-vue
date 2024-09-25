@@ -1,14 +1,13 @@
 <script setup lang="ts">
 const { isOpen } = defineProps<{ isOpen: boolean }>();
-const emit = defineEmits(["clickOutside"]);
-
+const emit = defineEmits(['clickOutside']);
 </script>
 <template>
-    <aside class="drawer" :class="{ 'drawer--open': isOpen }">
-        <slot></slot>
-    </aside>
+  <aside class="drawer" :class="{ 'drawer--open': isOpen }">
+    <slot></slot>
+  </aside>
 
-    <div class="overlay" v-if="isOpen" @click="emit('clickOutside')"></div>
+  <div class="overlay" v-if="isOpen" @click="emit('clickOutside')"></div>
 </template>
 <style lang="scss" scoped>
 .drawer {
