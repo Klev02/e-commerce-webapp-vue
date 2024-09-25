@@ -24,8 +24,8 @@ const closeDrawer = () => {
 
       <nav class="header__nav">
         <ul>
-          <li><RouterLink :to="ROUTER_PATH.PRODUCTS">Products</RouterLink></li>
-          <li><RouterLink :to="ROUTER_PATH.CART">Cart</RouterLink></li>
+          <li data-cy="product-link"><RouterLink :to="ROUTER_PATH.PRODUCTS">Products</RouterLink></li>
+          <li data-cy="cart-link"><RouterLink :to="ROUTER_PATH.CART">Cart</RouterLink></li>
         </ul>
       </nav>
       

@@ -26,11 +26,11 @@ const cartItemDetails = computed<(CartItemDetails & {totalPrice: number })[]>(()
         </tr>
       </thead>
       <tbody class="cart-table__body">
-        <tr class="cart-table__body-row" v-for="cartItem in cartItemDetails" :key="cartItem.productId">
-          <td data-label="Product">{{ cartItem.name }}</td>
-          <td data-label="Price">€{{ cartItem.price }}</td>
-          <td data-label="Amount">{{ cartItem.amount }}</td>
-          <td data-label="Total Price">€{{ cartItem.totalPrice }}</td>
+        <tr class="cart-table__body-row" v-for="cartItem in cartItemDetails" :key="cartItem.productId" data-cy="cart-item">
+          <td data-label="Product" data-cy="cart-item-name">{{ cartItem.name }}</td>
+          <td data-label="Price" data-cy="cart-item-price">€{{ cartItem.price }}</td>
+          <td data-label="Amount" data-cy="cart-item-amount">{{ cartItem.amount }}</td>
+          <td data-label="Total Price" data-cy="cart-item-total-price">€{{ cartItem.totalPrice }}</td>
           <td>
             <ActionButton @click="$emit('removeFromCart', cartItem.productId)">X</ActionButton>
           </td>
@@ -39,7 +39,7 @@ const cartItemDetails = computed<(CartItemDetails & {totalPrice: number })[]>(()
       <tfoot class="cart-table__footer">
         <tr class="cart-table__footer-row">
           <td colspan="3">Total:</td>
-          <td>€{{ cartDetails.totalPrice }}</td>
+          <td data-cy="cart-total-price">€{{ cartDetails.totalPrice }}</td>
         </tr>
       </tfoot>
   </table>

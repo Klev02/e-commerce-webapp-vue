@@ -4,7 +4,7 @@ const emit = defineEmits(['click']);
 </script>
 
 <template>
-  <button class="action-button" @click="emit('click')" :disabled="disabled">
+  <button class="action-button" @click="emit('click')" :disabled="disabled" data-cy="action-button">
     <slot>Button</slot>
   </button>
 </template>

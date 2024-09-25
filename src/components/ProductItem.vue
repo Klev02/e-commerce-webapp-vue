@@ -33,7 +33,7 @@ const onClickAddToCart = () => {
 </script>
 
 <template>
-  <div class="product-item">
+  <div class="product-item" data-cy="product-item">
     <img
       v-fallback-image="{ fallback: fallbackImage }"
       class="product-item__image"
@@ -42,15 +42,15 @@ const onClickAddToCart = () => {
     />
     <div class="product-item__content">
       <div class="product-item__info">
-        <p>{{ productName }}</p>
-        <p>€{{ product.price }}</p>
+        <p data-cy="product-name">{{ productName }}</p>
+        <p data-cy="product-price">€{{ product.price }}</p>
       </div>
       <div class="product-item__actions">
         <NumberPicker v-model="amount" :max="product.availableAmount" />
         <ActionButton :disabled="amount === 0" @click="onClickAddToCart">Add to cart</ActionButton>
       </div>
-      <p>Available amount: {{ product.availableAmount }}</p>
-      <p>Min. order amount: {{ product.minOrderAmount }}</p>
+      <p data-cy="product-available-amount">Available amount: {{ product.availableAmount }}</p>
+      <p data-cy="product-min-amount">Min. order amount: {{ product.minOrderAmount }}</p>
       <p class="product-item__error" v-if="errorMessage">{{ errorMessage }}</p>
     </div>
   </div>
